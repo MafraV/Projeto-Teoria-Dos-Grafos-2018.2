@@ -45,7 +45,7 @@ int min(int x, int y)
   else return y;
 }
 
-void FloydMarshall(int size, int grafo[size][size])
+void FloydWarshall(int size, int grafo[size][size])
 {
   int i, j, k;
 
@@ -96,7 +96,7 @@ int main(void)
   printf("\n");
 
   printf("Matriz de adjacência após a aplicalção do Algoritmo de Floyd-Marshall:\n");
-  FloydMarshall(v, grafo);
+  FloydWarshall(v, grafo);
 
 
 
