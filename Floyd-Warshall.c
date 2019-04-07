@@ -95,7 +95,7 @@ int main(void)
   printarGrafo(v, grafo);
   printf("\n");
 
-  printf("Matriz de adjacência após a aplicalção do Algoritmo de Floyd-Marshall:\n");
+  printf("Matriz de adjacência após a aplicalção do Algoritmo de Floyd-Warshall:\n");
   FloydWarshall(v, grafo);
 
 
