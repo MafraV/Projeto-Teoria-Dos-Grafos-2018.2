@@ -20,18 +20,20 @@ void imprimir(int a, int b, int flag, int valor, int k)
 	}
 }
 
-void krusk(struct LISTA *lista)
+void krusk(struct LISTA *lista, int n)
 {
-	int aux[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	int aux[n+1];
 	int menor, i;
 	int flag = 0;
 	int soma = 0;
 	int k = 1;
+	for(i = 0; i<n+1; i++)
+		aux[i] = i;
 	while(lista != NULL)
 	{
 		menor = lista->v1 < lista->v2 ? lista->v1 : lista->v2;
 		//printf("menor: %d; lista->v1: %d; lista->v2: %d\n", menor, lista->v1, lista->v2);
-		for(i = 1; i<10; i++)
+		for(i = 1; i<n+1; i++)
 		{
 			if(aux[i] == lista->v1 || aux[i] == lista->v2)
 			{
@@ -49,9 +51,9 @@ void krusk(struct LISTA *lista)
 		else
 			imprimir(lista->v1, lista->v2, flag, lista->val, k);
 		flag = 0;
-		for(i = 1; i<10; i++)
+		for(i = 1; i<n+1; i++)
 			soma += aux[i];
-		if(soma == 9)
+		if(soma == n)
 			break;
 		else 
 			soma = 0;
@@ -225,10 +227,26 @@ void imprimir_lista(struct LISTA *lista)
 	}
 }
 
+int confere_parametros(int a, int b, int peso, int n)
+{
+	if(a <= n && a > 0)
+	{
+		if(b <= n && b > 0)
+		{
+			if(peso > 0)
+			{
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
 int main()
 {
 	struct LISTA *lista;
 	struct LISTA *inicio;
+	int n, a, b, peso;
 	///criando a lista
 	lista = calloc(1, sizeof(struct LISTA));
 	if(lista==NULL)
@@ -240,25 +258,37 @@ int main()
 	lista->prev = NULL;
 	///entrada no formato vertice 1, vertice 2, peso da aresta
 	// a entrada 1, 2, 4 foi colocada de outra forma para poder melhor ordenar
-	lista->v1 = 1;
-	lista->v2 = 2;
-	lista->val = 4;
-	inserir(lista, 1, 6, 5);
-	inserir(lista, 2, 6, 3);
-	inserir(lista, 2, 3, 7);
-	inserir(lista, 3, 4, 5);
-	inserir(lista, 3, 7, 6);
-	inserir(lista, 4, 5, 3);
-	inserir(lista, 5, 7, 2);
-	inserir(lista, 5, 8, 4);
-	inserir(lista, 6, 7, 7);
-	inserir(lista, 6, 9, 5);
-	inserir(lista, 7, 8, 6);
-	inserir(lista, 8, 9, 8);
+	printf("Informe o numero de vertices do grafo: \n");
+	scanf("%d", &n);
+	printf("Informe a entrada no formato vertice 1, vertice 2, peso da aresta\n");
+	printf("Nem os vertices nem os pesos podem ser menores que 1\n");
+	printf("Os indices dos vertices não podem ser maiores que %d\n", n);
+	printf("Se o grafo não for direcionado coloque apenas uma aresta, com o par a sua escolha\n");
+	printf("A entrada termina quando a soma v1, v2 ou peso não estiverem mais dentro dos parametros\n");
+	scanf("%d%d%d", &a, &b, &peso);
+	if(confere_parametros(a, b, peso, n))
+	{
+		lista->v1 = a;
+		lista->v2 = b;
+		lista->val = peso;
+	}
+	else
+	{
+		printf("Entrada invalida\n");
+		exit(-1);
+	}
+	scanf("%d%d%d", &a, &b, &peso);
+	while(confere_parametros(a, b, peso, n))
+	{
+	 	inserir(lista, a, b, peso);
+	 	scanf("%d%d%d", &a, &b, &peso);
+	 	if(confere_parametros(a, b, peso, n))
+	 		printf("Fim da entrada\n");
+	}
 	while(lista->prev != NULL)
 		lista = lista->prev;
 	inicio = lista;
-	krusk(lista);
+	krusk(lista, n);
   	//imprimir_lista(lista);
   	lista=inicio;
 	while(lista->next!=NULL)
