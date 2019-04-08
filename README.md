@@ -16,3 +16,4 @@
   - *Bellman-Ford*: o algoritmo de Bellman-Ford usa structs tanto para vértices, quanto para as arestas, contendo informações necessárias para a aplicação do algoritmo,
   da mesma maneira do anterior, ele pede pra entrar o grafo de maneira detalhada, sendo a entrada para o algoritmo em si o grupo de vértices, o grupo de arestas e o vértice que será a origem na execução do algoritmo,
    retornando uma array de vértices, onde v[i] representa a menor distância do vértice origem ao vértice i.
+- *Kruskal* :  O arquivo Kruskal.c contem o exemplo do livro, ja o arquivo Kruskal_2.c aceita entrada do usuario, ambos os arquivos retornam uma tabela com as arestas que não formam ciclo na ordem que são colocadas para formar a arvore geradora minima, isto é, levando em conta qual tem menos  peso.
