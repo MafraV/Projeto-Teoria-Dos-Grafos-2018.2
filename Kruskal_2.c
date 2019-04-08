@@ -264,7 +264,7 @@ int main()
 	printf("Nem os vertices nem os pesos podem ser menores que 1\n");
 	printf("Os indices dos vertices não podem ser maiores que %d\n", n);
 	printf("Se o grafo não for direcionado coloque apenas uma aresta, com o par a sua escolha\n");
-	printf("A entrada termina quando a soma v1, v2 ou peso não estiverem mais dentro dos parametros\n");
+	printf("A entrada termina quando v1, v2 ou peso não estiverem mais dentro dos parametros\n");
 	scanf("%d%d%d", &a, &b, &peso);
 	if(confere_parametros(a, b, peso, n))
 	{
