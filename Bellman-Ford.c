@@ -67,42 +67,26 @@ vertice** BellmanFord(vertice** vertices, aresta** arestas, struct vertice_* ori
 
 int main(void)
 {
-  printf("Quantos vértices seu grafo terá?\n");
-  int v;
-  scanf("%d", &v);
+  printf("Por favor, entre qual o número de vértices, arestas e o vértice origem:\n");
+  int v, a, origin, i;
+  scanf("%d%d%d", &v, &a, &origin);
   vertice* vertices[v];
-
-  printf("Quantas arestas seu grafo terá?\n");
-  int a;
-  scanf("%d", &a);
   aresta* arestas[a];
-
-  int i, j, ligações, ligação, peso, atualAresta = 0;
 
   for(i=0; i<v; i++)
   {
     vertices[i] = createVertice();
   }
 
-  for(i=0; i<v; i++)
+  printf("Por favor, insira as arestas de seu grafo:\n");
+
+  int origem, destino, peso;
+  for(i=0; i<a; i++)
   {
-    printf("Quantas ligações o grafo %d possui?\n", i);
-    scanf("%d", &ligações);
-    for(j=0; j<ligações; j++)
-    {
-      printf("Entre um dos vértices que este tem ligação: (de 0 até %d)\n", v-1);
-      scanf("%d", &ligação);
-      printf("Qual o peso desta ligação?\n");
-      scanf("%d", &peso);
-
-      aresta* a = createAresta(peso, vertices[i], vertices[ligação]);
-      arestas[atualAresta++] = a; 
-    }
+    scanf("%d%d%d", &origem, &destino, &peso);
+    aresta* newAresta = createAresta(peso, vertices[origem], vertices[destino]);
+    arestas[i] = newAresta;
   }
-
-  printf("Qual vértice será a origem na execução do Algoritmo de Bellman-Ford? (de 0 até %d)\n", v-1);
-  int origin;
-  scanf("%d", &origin);
 
   vertice** verticesAlterados = BellmanFord(vertices, arestas, vertices[origin], v, a);
 

@@ -2,24 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int getVertices()
-{
-  int v;
-  printf("Por favor, insira quantos vertices o seu grafo terá:\n");
-  scanf("%d", &v);
-  return v;
-}
-
-int getLigações(int i)
-{
-  int l;
-  printf("Quantas ligações o vértice ");
-  printf("%d", i);
-  printf(" terá:\n");
-  scanf("%d", &l);
-  return l;
-}
-
 void printarGrafo(int size, int grafo[size][size])
 {
   int i, j;
@@ -65,7 +47,10 @@ void FloydWarshall(int size, int grafo[size][size])
 
 int main(void) 
 {
-  int v = getVertices(), ligações, ligação, peso, i, j;
+  int v , a, peso, origem, destino, i, j;
+
+  printf("Por favor, insira a quantidade de vertices e arestas:\n");
+  scanf("%d%d", &v, &a);
   int grafo[v][v];
 
   for(i=0; i<v; i++)
@@ -77,18 +62,11 @@ int main(void)
     }
   }
 
-  for(i=0; i<v; i++)
+  printf("Por favor, insira as arestas do seu grafo:\n");
+  for(i=0; i<a; i++)
   {
-    ligações = getLigações(i);
-    
-    for(j=0; j<ligações; j++)
-    {
-      printf("Insira um vértice que este tenha ligação: (de 0 até %d)\n", v-1);
-      scanf("%d", &ligação);
-      printf("Qual o peso desta ligação?\n");
-      scanf("%d", &peso);
-      grafo[i][ligação] = peso;
-    }
+    scanf("%d%d%d", &origem, &destino, &peso);
+    grafo[origem][destino] = peso;
   }
 
   printf("Matriz de adjacência do seu Grafo:\n");
