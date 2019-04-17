@@ -229,14 +229,12 @@ void imprimir_lista(struct LISTA *lista)
 
 int confere_parametros(int a, int b, int peso, int n)
 {
-	if(a <= n && a > 0)
+	if(a >= 0 && a <= n)
 	{
-		if(b <= n && b > 0)
+		if(b >= 0 && b <= n)
 		{
 			if(peso > 0)
-			{
 				return 1;
-			}
 		}
 	}
 	return 0;
@@ -246,7 +244,7 @@ int main()
 {
 	struct LISTA *lista;
 	struct LISTA *inicio;
-	int n, a, b, peso;
+	int vertices, arestas, a, b, peso;
 	///criando a lista
 	lista = calloc(1, sizeof(struct LISTA));
 	if(lista==NULL)
@@ -258,15 +256,17 @@ int main()
 	lista->prev = NULL;
 	///entrada no formato vertice 1, vertice 2, peso da aresta
 	// a entrada 1, 2, 4 foi colocada de outra forma para poder melhor ordenar
-	printf("Informe o numero de vertices do grafo: \n");
-	scanf("%d", &n);
-	printf("Informe a entrada no formato vertice 1, vertice 2, peso da aresta\n");
-	printf("Nem os vertices nem os pesos podem ser menores que 1\n");
-	printf("Os indices dos vertices não podem ser maiores que %d\n", n);
+	printf("Informe o numero de vertices do grafo: ");
+	scanf("%d", &vertices);
+	printf("Informe o numero de arestas do grafo: ");
+	scanf("%d", &arestas);
+	printf("\nInforme o valor das arestas entre os vertices, no seguinte formato:");
+	printf("\nVertice_de_saida Vertice_de_entrada Valor_da_aresta\n");
 	printf("Se o grafo não for direcionado coloque apenas uma aresta, com o par a sua escolha\n");
-	printf("A entrada termina quando v1, v2 ou peso não estiverem mais dentro dos parametros\n");
+	printf("O Valor_da_aresta não pode ser menor que 1\n");
+	printf("Os indices dos vertices não podem ser maiores que %d nem menores que 0\n", vertices);
 	scanf("%d%d%d", &a, &b, &peso);
-	if(confere_parametros(a, b, peso, n))
+	if(confere_parametros(a, b, peso, vertices))
 	{
 		lista->v1 = a;
 		lista->v2 = b;
@@ -278,17 +278,21 @@ int main()
 		exit(-1);
 	}
 	scanf("%d%d%d", &a, &b, &peso);
-	while(confere_parametros(a, b, peso, n))
+	while(arestas - 2 > 0)
 	{
 	 	inserir(lista, a, b, peso);
 	 	scanf("%d%d%d", &a, &b, &peso);
-	 	if(confere_parametros(a, b, peso, n))
-	 		printf("Fim da entrada\n");
+	 	if(!confere_parametros(a, b, peso, vertices))
+		{
+			printf("Fim da entrada\n");
+			exit(-1);
+		}
+		arestas--;
 	}
 	while(lista->prev != NULL)
 		lista = lista->prev;
 	inicio = lista;
-	krusk(lista, n);
+	krusk(lista, vertices);
   	//imprimir_lista(lista);
   	lista=inicio;
 	while(lista->next!=NULL)
